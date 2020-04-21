@@ -318,6 +318,9 @@ export default class CalendarPicker extends Component {
       dayOfWeekStyles,
       previousTitleStyle,
       nextTitleStyle,
+      leftArrowStyle,
+      rightArrowStyle,
+      headertextStyle
     } = this.props;
 
     let _disabledDates = [];
@@ -398,6 +401,9 @@ export default class CalendarPicker extends Component {
             headingLevel={headingLevel}
             previousTitleStyle={previousTitleStyle}
             nextTitleStyle={nextTitleStyle}
+            leftArrowStyle = {leftArrowStyle}
+            rightArrowStyle = {rightArrowStyle}
+            headertextStyle = {headertextStyle}
           />
           <Weekdays
             styles={styles}
