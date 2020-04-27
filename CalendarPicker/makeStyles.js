@@ -108,6 +108,17 @@ export function makeStyles(scaler, backgroundColor, textColor, todayBackgroundCo
       justifyContent: 'center'
     },
 
+    startSameDayWrapper: {
+      width: 40*scaler,
+      height: 30*scaler,
+      marginLeft:10*scaler,
+      borderTopLeftRadius: 20*scaler,
+      borderBottomLeftRadius: 20*scaler,
+      backgroundColor: SELECTED_BG_COLOR,
+      alignSelf: 'center',
+      justifyContent: 'center'
+    },
+
     endDayWrapper: {
       width: 50*scaler,
       height: 30*scaler,

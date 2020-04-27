@@ -38,6 +38,7 @@ export default function Day(props) {
 
   let dateOutOfRange;
   let daySelectedStyle = styles.dayButton; // may be overridden depending on state
+  let startSelectedDayStyle = styles.dayButton
   let selectedDayColorStyle = {};
   let propSelectedDayStyle;
   let dateIsBeforeMin = false;
@@ -133,6 +134,7 @@ export default function Day(props) {
           // Apply style for start date
         if (isThisDaySameAsSelectedStart) {
           daySelectedStyle = [styles.startDayWrapper, selectedRangeStyle, selectedRangeStartStyle];
+          startSelectedDayStyle = [styles.startSameDayWrapper, selectedRangeStyle];
           selectedDayColorStyle = styles.selectedDayLabel;
         }
         // Apply style for end date
@@ -151,6 +153,7 @@ export default function Day(props) {
         if (thisDay.isBetween(selectedStartDate, selectedEndDate, 'day')) {
           daySelectedStyle = [styles.inRangeDay, selectedRangeStyle];
           selectedDayColorStyle = styles.selectedDayLabel;
+
         }
       }
       // Apply style if start date has been selected but end date has not
@@ -164,9 +167,12 @@ export default function Day(props) {
 
     return (
       <View style={[styles.dayWrapper, customContainerStyle]}>
+        <View style={startSelectedDayStyle}>
+       
+        </View>
         <TouchableOpacity
           disabled={!enableDateChange}
-          style={[customDateStyle, daySelectedStyle, propSelectedDayStyle ]}
+          style={[customDateStyle, daySelectedStyle, propSelectedDayStyle, {position:'absolute'} ]}
           onPress={() => onPressDay(day) }>
           <Text style={[styles.dayLabel, textStyle, customTextStyle, selectedDayColorStyle]}>
             { day }
