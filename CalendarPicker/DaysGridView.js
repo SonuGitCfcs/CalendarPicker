@@ -1,17 +1,10 @@
-import React from 'react';
-import uuid from 'uuid/v4';
-import {
-  View,
-  Text,
-  ViewPropTypes as RNViewPropTypes,
-} from 'react-native';
-import PropTypes from 'prop-types';
-import Day from './Day';
-import EmptyDay from './EmptyDay';
-import { Utils } from './Utils';
-import moment from 'moment';
-
-const ViewPropTypes = RNViewPropTypes || View.propTypes;
+import React from "react";
+import uuid from "uuid/v4";
+import { View } from "react-native";
+import Day from "./Day";
+import EmptyDay from "./EmptyDay";
+import { Utils } from "./Utils";
+import moment from "moment";
 
 export default function DaysGridView(props) {
   const {
@@ -36,7 +29,7 @@ export default function DaysGridView(props) {
     disabledDatesTextStyle,
     minRangeDuration,
     maxRangeDuration,
-    enableDateChange
+    enableDateChange,
   } = props;
 
   const today = moment();
@@ -54,20 +47,24 @@ export default function DaysGridView(props) {
   const firstWeekDay = firstDayOfMonth.isoWeekday();
 
   // fill up an array of days with the amount of days in the current month
-  const days = Array.apply(null, {length: totalDays}).map(Number.call, Number);
+  const days = Array.apply(null, { length: totalDays }).map(
+    Number.call,
+    Number
+  );
 
   // 7 days in a week.
-  const dayArray = [ 0, 1, 2, 3, 4, 5, 6 ];
+  const dayArray = [0, 1, 2, 3, 4, 5, 6];
 
   // There can be 4 to 6 rows of weeks in a month.
-  const weekArray = [ 0, 1, 2, 3, 4, 5 ];
+  const weekArray = [0, 1, 2, 3, 4, 5];
 
   // Get the starting index, based upon whether we are using monday or sunday as first day.
   const startIndex = (startFromMonday ? firstWeekDay - 1 : firstWeekDay) % 7;
 
   function generateDatesForWeek(i) {
-    return dayArray.map(dayIndex => {
-      if (i === 0) { // for first row, let's start showing the days on the correct weekday
+    return dayArray.map((dayIndex) => {
+      if (i === 0) {
+        // for first row, let's start showing the days on the correct weekday
         if (dayIndex >= startIndex) {
           if (days.length > 0) {
             const day = days.shift() + 1;
@@ -100,12 +97,7 @@ export default function DaysGridView(props) {
             );
           }
         } else {
-          return (
-            <EmptyDay
-              key={uuid()}
-              styles={styles}
-            />
-          );
+          return <EmptyDay key={uuid()} styles={styles} />;
         }
       } else {
         if (days.length > 0) {
@@ -144,39 +136,11 @@ export default function DaysGridView(props) {
 
   return (
     <View style={styles.daysWrapper}>
-      { weekArray.map(weekIndexOfMonth => (
-          <View key={weekIndexOfMonth} style={styles.weekRow}>
-            { generateDatesForWeek(weekIndexOfMonth) }
-          </View>
-        ))
-      }
+      {weekArray.map((weekIndexOfMonth) => (
+        <View key={weekIndexOfMonth} style={styles.weekRow}>
+          {generateDatesForWeek(weekIndexOfMonth)}
+        </View>
+      ))}
     </View>
   );
-}
-
-DaysGridView.propTypes = {
-  styles: PropTypes.shape(),
-  month: PropTypes.number.isRequired,
-  year: PropTypes.number.isRequired,
-  onPressDay: PropTypes.func,
-  startFromMonday: PropTypes.bool,
-  selectedDayStyle: ViewPropTypes.style,
-  selectedRangeStartStyle: ViewPropTypes.style,
-  selectedRangeStyle: ViewPropTypes.style,
-  selectedRangeEndStyle: ViewPropTypes.style,
-  todayTextStyle: Text.propTypes.style,
-  customDatesStyles: PropTypes.arrayOf(PropTypes.shape({
-    date: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.instanceOf(Date),
-      PropTypes.instanceOf(moment)
-    ]),
-    containerStyle: ViewPropTypes.style,
-    style: ViewPropTypes.style,
-    textStyle: Text.propTypes.style,
-  })),
-  disabledDates: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
-  disabledDatesTextStyle: Text.propTypes.style,
-  minRangeDuration: PropTypes.oneOfType([PropTypes.array, PropTypes.number]),
-  maxRangeDuration: PropTypes.oneOfType([PropTypes.array, PropTypes.number]),
 }
